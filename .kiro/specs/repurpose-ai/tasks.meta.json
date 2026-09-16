@@ -1,0 +1,239 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1. Set up project structure and configuration files": [
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789208577481
+      },
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789208595698
+      },
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789208705866
+      }
+    ],
+    "2.1 Implement `ingest.py` document loading and chunking": [
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789208578737
+      },
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789208712297
+      },
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789211109349
+      }
+    ],
+    "2.2 Implement `ingest.py` embedding and ChromaDB storage": [
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789208579164
+      },
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789211116165
+      },
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789211772682
+      }
+    ],
+    "3.1 Define `Chunk` dataclass and `RetrieverUnavailableError` in `rag/retriever.py`": [
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789208580109
+      },
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789208712961
+      },
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789209142426
+      }
+    ],
+    "3.2 Implement `Retriever` class with `retrieve()` method": [
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789208580441
+      },
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789211116825
+      },
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789211773208
+      }
+    ],
+    "4.1 Define `GeneratorUnavailableError` and system prompt constant in `rag/generator.py`": [
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789208580767
+      },
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789208713573
+      },
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789209142950
+      }
+    ],
+    "4.2 Implement `Generator` class with `generate()` method": [
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789208581077
+      },
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789211117357
+      },
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789211773823
+      }
+    ],
+    "5.1 Define `PipelineResult` dataclass and `HAZARD_KEYWORDS` set in `rag/pipeline.py`": [
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789208581404
+      },
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789211780119
+      },
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789218397254
+      }
+    ],
+    "5.2 Implement `run()` function in `rag/pipeline.py`": [
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789208581548
+      }
+    ],
+    "6. Checkpoint — Core pipeline complete": [
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789208581751
+      }
+    ],
+    "7.1 Implement input validation and session state initialisation in `app.py`": [
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789208581951
+      }
+    ],
+    "7.5 Implement `render_recommendation()` and main chat UI in `app.py`": [
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789208582413
+      }
+    ],
+    "7.6 Implement \"Clear Conversation\" button and history appending in `app.py`": [
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789208582613
+      }
+    ],
+    "8.1 Write unit tests for input validation (`tests/test_validation.py`)": [
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789208582778
+      }
+    ],
+    "8.2 Write unit tests for pipeline orchestration (`tests/test_pipeline.py`)": [
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789208582948
+      }
+    ],
+    "8.3 Write unit tests for the retriever (`tests/test_retriever.py`)": [
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789208583206
+      }
+    ],
+    "8.4 Write unit tests for the generator (`tests/test_generator.py`)": [
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789208583533
+      }
+    ],
+    "8.5 Write unit tests for the ingestion script (`tests/test_ingest.py`)": [
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789208583707
+      }
+    ],
+    "9. Checkpoint — All tests pass": [
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789208583857
+      }
+    ],
+    "2. Implement the knowledge base ingestion script (`ingest.py`)": [
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789211772839
+      }
+    ],
+    "3. Implement the retrieval engine (`rag/retriever.py`)": [
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789211773290
+      }
+    ],
+    "4. Implement the LLM generator (`rag/generator.py`)": [
+      {
+        "executionId": "b037bb49-c9db-40df-a939-42a9e6c76ca2",
+        "chatSessionId": "sess_b10c169d-4de1-4ad5-823b-91f58b618420",
+        "timestamp": 1789211773957
+      }
+    ]
+  }
+}

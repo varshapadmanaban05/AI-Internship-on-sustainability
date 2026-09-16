@@ -1,0 +1,30 @@
+E-WASTE AND ELECTRONICS DISPOSAL GUIDE
+
+Electronics contain valuable materials (gold, copper, rare earth metals) but also hazardous substances (lead, mercury, cadmium).
+
+NEVER place the following in general household waste:
+- Mobile phones and smartphones
+- Laptops and computers
+- Tablets and e-readers
+- Televisions and monitors
+- Batteries of any kind (lithium-ion, alkaline, lead-acid)
+- Printers, scanners, cables
+- LED and CFL light bulbs
+- Fridges, air conditioners (contain refrigerants)
+
+WHERE TO TAKE E-WASTE:
+- Manufacturer take-back schemes (Apple, Samsung, Dell all offer these)
+- Certified e-waste recyclers (look for R2 or e-Stewards certification)
+- Municipal hazardous waste collection events
+- Retailer drop-off points (Best Buy, Staples, Currys)
+- Local council waste facilities
+
+BATTERIES specifically:
+- Lithium-ion (phones, laptops): Most electronics stores have collection bins
+- Alkaline (AA, AAA): Many supermarkets accept these
+- Lead-acid (car batteries): Auto parts stores take these back
+
+REPAIR BEFORE RECYCLING:
+Many electronics can be repaired cheaply. Check iFixit.com for guides. Phone screens, laptop keyboards, and charging ports are commonly repairable.
+
+Source: EU WEEE Directive, India E-Waste Rules 2022
