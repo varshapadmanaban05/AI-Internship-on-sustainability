@@ -14,7 +14,7 @@ load_dotenv()
 
 # ── Config ────────────────────────────────────────────────────────────────────
 CHROMA_PATH  = "data/chroma_db"
-MODEL        = os.getenv("GROQ_MODEL", "llama3-8b-8192")
+MODEL        = os.getenv("GROQ_MODEL", "groq/compound-mini")
 SIMILARITY_THRESHOLD = 0.45
 
 HAZARD_KEYWORDS = {
@@ -25,28 +25,17 @@ HAZARD_KEYWORDS = {
 
 SYSTEM_PROMPT = """You are RePurpose AI, a circular economy advisor.
 
-When a user describes an unwanted item, recommend the best circular pathway in this priority order:
-1. Reuse As-Is  2. Repair  3. Repurpose/Upcycle  4. Donate  5. Refurbish  6. Recycle  7. Responsible Disposal
+Recommend the best pathway for an unwanted item in this priority order:
+1. Reuse As-Is  2. Repair  3. Repurpose  4. Donate  5. Refurbish  6. Recycle  7. Responsible Disposal
 
-Always respond in this exact format:
+Respond in this format:
+**Recommended Pathway:** [name]
+**Why:** [1-2 sentences]
+**Sources:** [source titles from context, or "None"]
+**Next Steps:** [2-3 bullet points]
+**Confidence:** [High/Moderate/Low] — [reason]
 
-**♻️ Recommended Pathway:** [pathway name]
-
-**Why:** [2-3 sentences. If not recommending Reuse As-Is, explain why higher options don't apply.]
-
-**Sources:**
-- [list the source titles from the provided context, or "No references available" if none]
-
-**Next Steps:**
-- [1-3 specific, actionable things the user can do right now]
-
-**Confidence:** [High / Moderate / Low] — [one sentence explaining why]
-
-Rules:
-- Never recommend home disposal of hazardous items. Always direct to certified channels.
-- Only cite sources from the provided context. Do not fabricate references.
-- If no context is provided, note "low knowledge base coverage" in Confidence.
-- End with: *This recommendation is advisory only. For hazardous or high-value items, consult your local authority.*"""
+Rules: Never recommend home disposal of hazardous items. Only cite provided sources. End with: *Advisory only — consult local authority for hazardous items.*"""
 
 # ── Cached resources ──────────────────────────────────────────────────────────
 @st.cache_resource
@@ -88,7 +77,7 @@ def is_hazardous(text):
 def build_user_message(description, chunks):
     if chunks:
         context = "\n\n---\n\n".join(
-            f"[Source: {c['title']}]\n{c['text']}" for c in chunks
+            f"[Source: {c['title']}]\n{c['text'][:400]}" for c in chunks
         )
         return f"Item: {description}\n\nKnowledge base context:\n{context}"
     return f"Item: {description}\n\n(No knowledge base context found — use low confidence note.)"
@@ -103,7 +92,7 @@ def get_response(description, history, model, col):
     messages.append({"role": "user", "content": user_msg})
 
     client = Groq(api_key=os.getenv("GROQ_API_KEY", ""))
-    resp = client.chat.completions.create(model=MODEL, messages=messages, timeout=30)
+    resp = client.chat.completions.create(model=MODEL, messages=messages, timeout=30, max_tokens=800)
     return resp.choices[0].message.content, chunks
 
 # ── UI ────────────────────────────────────────────────────────────────────────
