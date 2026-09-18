@@ -1,0 +1,880 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RePurpose AI — Project Ideation &amp; Solution Architecture</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: #1f2328;
+    background: #ffffff;
+    padding: 40px 20px 60px;
+  }
+  .container { max-width: 760px; margin: 0 auto; }
+
+  /* Cover */
+  .cover {
+    border: 1px solid #e5e7eb;
+    background: #f7f8fa;
+    border-radius: 6px;
+    padding: 36px 32px 28px;
+    margin-bottom: 40px;
+  }
+  .cover .badge {
+    display: inline-block;
+    background: #3b82d4;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    border-radius: 3px;
+    padding: 2px 8px;
+    margin-bottom: 14px;
+  }
+  .cover h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #1f2328;
+    margin-bottom: 6px;
+  }
+  .cover .subtitle {
+    font-size: 15px;
+    color: #57606a;
+    margin-bottom: 20px;
+  }
+  .cover-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 24px;
+    font-size: 13px;
+    color: #57606a;
+    border-top: 1px solid #e5e7eb;
+    padding-top: 16px;
+  }
+  .cover-meta span { color: #1f2328; font-weight: 500; }
+
+  /* TOC */
+  .toc {
+    background: #f7f8fa;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin-bottom: 40px;
+  }
+  .toc h2 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #57606a; margin-bottom: 12px; }
+  .toc ol { padding-left: 18px; }
+  .toc li { font-size: 13.5px; margin-bottom: 5px; }
+  .toc a { color: #3b82d4; text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+
+  /* Section */
+  .section { margin-bottom: 44px; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+  }
+  .section-num {
+    background: #3b82d4;
+    color: #fff;
+    font-size: 11.5px;
+    font-weight: 700;
+    border-radius: 3px;
+    padding: 2px 7px;
+    flex-shrink: 0;
+  }
+  .section-header h2 { font-size: 17px; font-weight: 700; color: #1f2328; }
+
+  h3 { font-size: 14.5px; font-weight: 700; color: #1f2328; margin: 18px 0 8px; }
+  h4 { font-size: 13.5px; font-weight: 600; color: #57606a; margin: 14px 0 6px; text-transform: uppercase; letter-spacing: .04em; }
+  p { margin-bottom: 10px; }
+  ul, ol { padding-left: 20px; margin-bottom: 10px; }
+  li { margin-bottom: 4px; }
+
+  /* Callout boxes */
+  .callout {
+    border-left: 4px solid #3b82d4;
+    background: #f0f6ff;
+    border-radius: 0 5px 5px 0;
+    padding: 12px 16px;
+    margin: 14px 0;
+    font-size: 14px;
+  }
+  .callout.green { border-color: #2a9d5c; background: #f0faf4; }
+  .callout.purple { border-color: #7c5cd8; background: #f5f2ff; }
+  .callout.amber { border-color: #d97706; background: #fffbeb; }
+  .callout strong { display: block; margin-bottom: 4px; font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: #57606a; }
+
+  /* Table */
+  table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 13.5px; }
+  th { background: #f7f8fa; border: 1px solid #e5e7eb; padding: 8px 12px; text-align: left; font-weight: 600; color: #1f2328; }
+  td { border: 1px solid #e5e7eb; padding: 8px 12px; vertical-align: top; color: #1f2328; }
+  tr:nth-child(even) td { background: #fafbfc; }
+
+  /* Flow diagram */
+  .flow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    align-items: stretch;
+    margin: 14px 0;
+  }
+  .flow-step {
+    background: #f7f8fa;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    padding: 10px 13px;
+    font-size: 13px;
+    flex: 1 1 120px;
+    min-width: 100px;
+    text-align: center;
+  }
+  .flow-step .step-num { font-size: 11px; color: #57606a; font-weight: 600; display: block; margin-bottom: 3px; }
+  .flow-arrow {
+    display: flex;
+    align-items: center;
+    padding: 0 4px;
+    color: #3b82d4;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  /* SDG pills */
+  .sdg-grid { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+  .sdg-pill {
+    border-radius: 4px;
+    padding: 5px 11px;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #fff;
+  }
+  .sdg-primary { background: #3b82d4; }
+  .sdg-secondary { background: #7c5cd8; }
+  .sdg-tertiary { background: #2a9d5c; }
+
+  /* MVP vs Future table */
+  .tier-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 14px 0; }
+  .tier-box { border: 1px solid #e5e7eb; border-radius: 5px; padding: 16px; }
+  .tier-box h3 { font-size: 13.5px; margin-top: 0; margin-bottom: 10px; }
+  .tier-box.mvp { border-top: 3px solid #2a9d5c; }
+  .tier-box.future { border-top: 3px solid #7c5cd8; }
+  .tier-box ul { margin-bottom: 0; }
+
+  /* Tech stack */
+  .stack-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 14px; }
+  .stack-tag {
+    background: #f7f8fa;
+    border: 1px solid #e5e7eb;
+    border-radius: 3px;
+    font-size: 12.5px;
+    padding: 3px 9px;
+    color: #1f2328;
+  }
+
+  /* Metrics */
+  .metrics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 14px 0; }
+  .metric-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 5px;
+    padding: 13px;
+    background: #f7f8fa;
+  }
+  .metric-card .metric-label { font-size: 12px; color: #57606a; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
+  .metric-card .metric-value { font-size: 13.5px; color: #1f2328; }
+
+  /* Footer */
+  .footer {
+    margin-top: 52px;
+    border-top: 1px solid #e5e7eb;
+    padding-top: 16px;
+    text-align: center;
+    font-size: 12px;
+    color: #57606a;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  
+  <div class="cover">
+    <div class="badge">1M1B · IBM SkillsBuild · AI for Sustainability Internship</div>
+    <h1>RePurpose AI</h1>
+    <div class="subtitle">An AI-powered Circular Reuse &amp; Repurposing Advisor — Project Ideation &amp; Solution Architecture Document</div>
+    <div class="cover-meta">
+      <div>Program <span>1M1B – IBM SkillsBuild Virtual Internship</span></div>
+      <div>Track <span>AI for Sustainability</span></div>
+      <div>Document Type <span>Project Ideation &amp; Architecture</span></div>
+      <div>Primary SDG <span>SDG 12 — Responsible Consumption &amp; Production</span></div>
+      <div>AI Approach <span>RAG + Multimodal + Agentic Workflow</span></div>
+      <div>Prototype Stage <span>MVP — Student Feasible</span></div>
+    </div>
+  </div>
+
+  
+  <div class="toc">
+    <h2>Table of Contents</h2>
+    <ol>
+      <li><a href="#s1">Executive Summary</a></li>
+      <li><a href="#s2">Problem Statement</a></li>
+      <li><a href="#s3">Target Users &amp; Pain Points</a></li>
+      <li><a href="#s4">Why AI Is Genuinely Useful Here</a></li>
+      <li><a href="#s5">Role of Multimodal AI</a></li>
+      <li><a href="#s6">RAG Workflow &amp; Knowledge Base Design</a></li>
+      <li><a href="#s7">AI Decision Logic — Pathway Recommendation</a></li>
+      <li><a href="#s8">Agentic Workflow</a></li>
+      <li><a href="#s9">SDG Alignment</a></li>
+      <li><a href="#s10">Prototype Scope — MVP vs Future Enhancements</a></li>
+      <li><a href="#s11">Responsible AI Considerations</a></li>
+      <li><a href="#s12">System Architecture &amp; Technology Stack</a></li>
+      <li><a href="#s13">Measurable Impact Metrics</a></li>
+      <li><a href="#s14">Conclusion</a></li>
+    </ol>
+  </div>
+
+  
+  <div class="section" id="s1">
+    <div class="section-header"><span class="section-num">01</span><h2>Executive Summary</h2></div>
+    <p>Every day, households, institutions, and businesses discard items that could be reused, repaired, repurposed, or donated — not because there is no alternative, but because people lack the knowledge, tools, and confidence to act on one. The result is accelerating landfill growth, unnecessary resource consumption, and a circular economy that fails to close the loop.</p>
+    <p><strong>RePurpose AI</strong> is a conversational, AI-powered advisor that accepts a description (and optionally a photo) of an unwanted item and recommends the most appropriate circular pathway: reuse, repair, repurpose, donate, refurbish, recycle, or responsibly dispose. Recommendations are grounded in a curated knowledge base of sustainability, circular-economy, and waste-management guidelines using Retrieval-Augmented Generation (RAG), ensuring advice is traceable, explainable, and reliable — not hallucinated.</p>
+    <p>The system is designed to be built as a realistic student prototype using IBM watsonx, open-source libraries, and a modest document corpus, while remaining architecturally extensible into a production-grade civic or enterprise tool.</p>
+  </div>
+
+  
+  <div class="section" id="s2">
+    <div class="section-header"><span class="section-num">02</span><h2>Problem Statement</h2></div>
+
+    <div class="callout">
+      <strong>How Might We Statement</strong>
+      How might we help individuals, institutions, and small businesses make informed circular-economy decisions about unwanted items — so that fewer items become waste, more resources are recovered, and the environmental cost of every discarded object is meaningfully reduced?
+    </div>
+
+    <h3>Context &amp; Scale</h3>
+    <ul>
+      <li>The world generates over <strong>2.01 billion tonnes</strong> of municipal solid waste annually (World Bank, 2022), with at least 33% not managed in an environmentally safe manner.</li>
+      <li>A significant portion of landfill content consists of items with viable reuse or recycling potential — furniture, electronics, packaging, textiles, and equipment.</li>
+      <li>The barrier is not always willingness; it is <strong>information asymmetry</strong>: people do not know what to do, who to contact, or whether repair or donation is even viable for a specific item.</li>
+      <li>Existing tools (recycling locators, general search) are fragmented, generic, and require the user to already know the right question to ask.</li>
+    </ul>
+
+    <h3>The Core Gap</h3>
+    <p>There is no accessible, intelligent, item-specific advisor that can look at what someone has in front of them and say: <em>"This item, in this condition, has the following viable second-life options — here is why, and here is how to act on each."</em></p>
+  </div>
+
+  
+  <div class="section" id="s3">
+    <div class="section-header"><span class="section-num">03</span><h2>Target Users &amp; Pain Points</h2></div>
+
+    <table>
+      <thead>
+        <tr><th>User Segment</th><th>Typical Item Types</th><th>Core Pain Point</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Individual Households</strong></td>
+          <td>Old furniture, appliances, clothing, packaging</td>
+          <td>No idea whether to donate, recycle, or bin; low confidence in repair; no knowledge of local options</td>
+        </tr>
+        <tr>
+          <td><strong>College / University Students</strong></td>
+          <td>Electronics, stationery, textbooks, dorm furniture</td>
+          <td>Moving out creates bulk waste; sustainability intent exists but guidance does not</td>
+        </tr>
+        <tr>
+          <td><strong>Small Businesses &amp; Startups</strong></td>
+          <td>Office equipment, packaging, surplus materials</td>
+          <td>Disposal feels like the default; CSR-aware but under-resourced to research alternatives</td>
+        </tr>
+        <tr>
+          <td><strong>Institutional Procurement / Facilities Teams</strong></td>
+          <td>IT hardware, lab equipment, institutional furniture</td>
+          <td>End-of-life asset decisions are made ad hoc; no standard advisory tool; compliance risk for e-waste</td>
+        </tr>
+        <tr>
+          <td><strong>NGOs &amp; Circular-Economy Platforms</strong></td>
+          <td>Donated goods, salvaged materials</td>
+          <td>Intake assessment is manual and time-consuming; need quick triage to route items correctly</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Shared Pain Points Across All Segments</h3>
+    <ul>
+      <li><strong>Information gap:</strong> No single, item-aware source of guidance.</li>
+      <li><strong>Decision paralysis:</strong> Too many vague options lead to default disposal.</li>
+      <li><strong>Lack of explainability:</strong> Generic recycling advice doesn't say <em>why</em> an item qualifies.</li>
+      <li><strong>No context sensitivity:</strong> Material composition, condition, and age all matter — but generic guides ignore them.</li>
+      <li><strong>No action pathway:</strong> Advice without a next step (who to contact, what to search for) is unhelpful.</li>
+    </ul>
+  </div>
+
+  
+  <div class="section" id="s4">
+    <div class="section-header"><span class="section-num">04</span><h2>Why AI Is Genuinely Useful Here</h2></div>
+    <p>This is not a problem that requires AI for novelty — it requires AI because the problem is structurally ill-suited to rule-based or lookup tools:</p>
+
+    <table>
+      <thead><tr><th>Challenge</th><th>Why AI Adds Real Value</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Item descriptions are unstructured, vague, and varied</td>
+          <td>LLMs interpret natural language input regardless of how a user phrases it — no fixed taxonomy required</td>
+        </tr>
+        <tr>
+          <td>Pathway selection depends on multiple interacting attributes (material, condition, age, category)</td>
+          <td>AI can reason across attribute combinations that would require enormous rule tables to cover manually</td>
+        </tr>
+        <tr>
+          <td>Knowledge base is large, multi-domain, and regularly updated</td>
+          <td>RAG retrieves the most relevant guidance chunk at query time — no need to retrain the model as guidelines evolve</td>
+        </tr>
+        <tr>
+          <td>Image input is ambiguous (what material is this? how damaged is it?)</td>
+          <td>Multimodal vision models can extract attributes from photos that text descriptions miss or get wrong</td>
+        </tr>
+        <tr>
+          <td>Users need explanations, not just answers</td>
+          <td>LLMs naturally produce reasoning chains; RAG grounds them in source-cited content for credibility</td>
+        </tr>
+        <tr>
+          <td>Context varies by geography, item age, institutional constraints</td>
+          <td>AI can incorporate context variables into the reasoning without hard-coding every scenario</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout green">
+      <strong>Key Differentiator</strong>
+      RePurpose AI does not replace human judgment — it augments it. The system's job is to surface the right knowledge at the right moment, explain its reasoning, and give users actionable next steps they would not easily find on their own.
+    </div>
+  </div>
+
+  
+  <div class="section" id="s5">
+    <div class="section-header"><span class="section-num">05</span><h2>Role of Multimodal AI</h2></div>
+
+    <h3>Why Image Input Matters</h3>
+    <p>Users often cannot accurately describe the material, condition, or specific components of an item in text alone. A photo of a broken chair, a circuit board, or a packaging material contains information that a text description may omit or mischaracterize.</p>
+
+    <h3>What the Vision Model Does</h3>
+    <ul>
+      <li><strong>Item classification:</strong> Identify the type of object (e.g., "office chair," "CRT monitor," "blister packaging").</li>
+      <li><strong>Condition assessment:</strong> Detect visible damage, wear, or structural integrity from the image.</li>
+      <li><strong>Material inference:</strong> Infer likely material category (plastic, metal, wood, mixed) when not stated by the user.</li>
+      <li><strong>Hazard flagging:</strong> Detect features that suggest hazardous materials (battery cells visible, liquid staining, labeling cues).</li>
+    </ul>
+
+    <h3>Multimodal Workflow</h3>
+    <div class="flow">
+      <div class="flow-step"><span class="step-num">INPUT</span>User uploads photo</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="step-num">VISION</span>Multimodal model extracts item attributes</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="step-num">MERGE</span>Attributes merged with text description</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="step-num">RAG</span>Enriched query sent to retriever</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="step-num">OUTPUT</span>Grounded recommendation</div>
+    </div>
+
+    <div class="callout amber">
+      <strong>MVP Scope Note</strong>
+      For the student prototype, image input is optional. If vision API access is limited, the system can operate text-only first and add image input as a Phase 2 enhancement. Text-based descriptions provide sufficient signal for demonstrating the core RAG and reasoning logic.
+    </div>
+
+    <h3>Candidate Vision Models</h3>
+    <ul>
+      <li>IBM watsonx multimodal capabilities (if available in student tier)</li>
+      <li>OpenAI GPT-4o Vision (via API) — free-tier access available for prototyping</li>
+      <li>Google Gemini 1.5 Flash (vision, free tier available)</li>
+      <li>LLaVA (open-source, self-hosted) — fully offline option</li>
+    </ul>
+  </div>
+
+  
+  <div class="section" id="s6">
+    <div class="section-header"><span class="section-num">06</span><h2>RAG Workflow &amp; Knowledge Base Design</h2></div>
+
+    <h3>Why RAG Over Pure LLM Generation</h3>
+    <p>A bare LLM may give plausible but unsupported sustainability advice. RAG ties every recommendation to a retrievable source, making the system auditable, accurate, and update-friendly without retraining.</p>
+
+    <h3>End-to-End RAG Pipeline</h3>
+    <div class="flow" style="flex-wrap:wrap;gap:6px">
+      <div class="flow-step"><span class="step-num">1 — INGEST</span>Curate &amp; chunk documents</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="step-num">2 — EMBED</span>Generate vector embeddings</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="step-num">3 — STORE</span>Index in vector database</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="step-num">4 — QUERY</span>User input processed &amp; embedded</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="step-num">5 — RETRIEVE</span>Top-k semantically similar chunks</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="step-num">6 — AUGMENT</span>Chunks injected into LLM prompt</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="step-num">7 — GENERATE</span>Cited, grounded recommendation</div>
+    </div>
+
+    <h3>Knowledge Base: Document Corpus</h3>
+    <table>
+      <thead><tr><th>Category</th><th>Document Types &amp; Sources</th><th>Rationale</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Circular Economy Frameworks</strong></td>
+          <td>Ellen MacArthur Foundation guides, EU Circular Economy Action Plan summaries, WRAP (UK) circularity reports</td>
+          <td>Define the core reuse hierarchy and circular-economy principles that anchor all recommendations</td>
+        </tr>
+        <tr>
+          <td><strong>Waste Classification &amp; Handling</strong></td>
+          <td>UNEP waste management guidelines, Basel Convention summaries (hazardous waste), national e-waste rules (India E-Waste Rules 2022, EU WEEE Directive)</td>
+          <td>Ensure correct classification of hazardous vs non-hazardous items and legal disposal obligations</td>
+        </tr>
+        <tr>
+          <td><strong>Material-Specific Recycling Guides</strong></td>
+          <td>Plastics recycling codes (1–7), metal recyclability tables, paper/cardboard guidelines, battery disposal (Li-ion, alkaline, lead-acid), glass types</td>
+          <td>Inform material-level recommendations when item composition is known</td>
+        </tr>
+        <tr>
+          <td><strong>Electronics &amp; E-Waste</strong></td>
+          <td>iFixit repairability guides, manufacturer take-back scheme documentation, certified e-waste processor directories</td>
+          <td>Electronics are the highest-risk and highest-value item category; specialist guidance is critical</td>
+        </tr>
+        <tr>
+          <td><strong>Repurposing Inspiration</strong></td>
+          <td>Curated repurposing idea guides (furniture, textiles, packaging), upcycling NGO manuals</td>
+          <td>Provides the "repurpose" pathway with concrete, illustrative examples</td>
+        </tr>
+        <tr>
+          <td><strong>Donation &amp; Refurbishment Networks</strong></td>
+          <td>Charity shop acceptance criteria (e.g., British Heart Foundation, Goodwill), NGO donation intake guides, furniture reuse network standards</td>
+          <td>Informs whether an item meets donation-worthy condition thresholds</td>
+        </tr>
+        <tr>
+          <td><strong>Responsible Disposal</strong></td>
+          <td>Household hazardous waste disposal guides, municipal bulky waste collection rules, MSDS sheets for common household chemicals</td>
+          <td>Ensures the "disposal" pathway is safe and legally compliant</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Chunking Strategy</h3>
+    <ul>
+      <li>Chunk size: ~300–500 tokens with 50-token overlap to preserve context across chunk boundaries.</li>
+      <li>Metadata tagging: each chunk tagged with <em>item_category</em>, <em>material_type</em>, <em>pathway</em>, and <em>source_name</em> to enable hybrid (semantic + filter) retrieval.</li>
+      <li>Top-k retrieval: retrieve 3–5 chunks per query; pass to LLM as numbered context blocks.</li>
+    </ul>
+
+    <h3>Embedding &amp; Vector Store (Student-Feasible Options)</h3>
+    <div class="stack-row">
+      <span class="stack-tag">IBM watsonx.ai Embeddings</span>
+      <span class="stack-tag">sentence-transformers (all-MiniLM-L6-v2)</span>
+      <span class="stack-tag">ChromaDB (local, free)</span>
+      <span class="stack-tag">FAISS (in-memory, open source)</span>
+      <span class="stack-tag">Pinecone Free Tier</span>
+    </div>
+  </div>
+
+  
+  <div class="section" id="s7">
+    <div class="section-header"><span class="section-num">07</span><h2>AI Decision Logic — Pathway Recommendation</h2></div>
+
+    <h3>The Reuse Hierarchy (Embedded in System Prompt)</h3>
+    <p>The LLM is instructed to follow a prioritized pathway ladder. Higher pathways are preferred; the model must justify downgrading to a lower one.</p>
+
+    <table>
+      <thead><tr><th>Priority</th><th>Pathway</th><th>Condition Trigger</th></tr></thead>
+      <tbody>
+        <tr><td>1 — Highest</td><td><strong>Reuse As-Is</strong></td><td>Item is functional and in acceptable condition for its original purpose</td></tr>
+        <tr><td>2</td><td><strong>Repair</strong></td><td>Item has specific, fixable damage; repair cost is proportionate to value; parts are available</td></tr>
+        <tr><td>3</td><td><strong>Repurpose / Upcycle</strong></td><td>Original function is obsolete but item material/form has alternative use</td></tr>
+        <tr><td>4</td><td><strong>Donate / Redistribute</strong></td><td>Item is functional but unwanted by current owner; meets condition thresholds for acceptance</td></tr>
+        <tr><td>5</td><td><strong>Refurbish (3rd Party)</strong></td><td>Item needs professional restoration before re-entry into use; refurbishment market exists</td></tr>
+        <tr><td>6</td><td><strong>Recycle</strong></td><td>Item cannot be reused but materials are recoverable; material type is recyclable</td></tr>
+        <tr><td>7 — Last Resort</td><td><strong>Responsible Disposal</strong></td><td>Item contains hazardous materials or is not recoverable; must follow safe disposal guidelines</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Attribute Signals Used in Decision</h3>
+    <p>The system prompt instructs the model to extract or infer these signals before selecting a pathway:</p>
+    <ul>
+      <li><strong>Item category</strong> (furniture, electronics, packaging, appliance, textile, etc.)</li>
+      <li><strong>Condition</strong> (functional / minor damage / non-functional / hazardous)</li>
+      <li><strong>Material composition</strong> (wood, plastic, metal, mixed, glass, fabric, battery)</li>
+      <li><strong>Age / Generation</strong> (still relevant / outdated / obsolete)</li>
+      <li><strong>Hazard indicator</strong> (contains battery, CRT, refrigerant, mercury, chemicals)</li>
+      <li><strong>Repairability</strong> (modular / sealed / proprietary)</li>
+    </ul>
+
+    <h3>Prompt Architecture</h3>
+    <div class="callout purple">
+      <strong>System Prompt Pattern</strong>
+      The LLM receives: (1) a system instruction defining the reuse hierarchy and output format, (2) retrieved RAG context chunks with source tags, (3) extracted item attributes (from text + optional image), and (4) the user's original query. The model must select a primary pathway, justify it using retrieved context, name the source, and suggest a concrete next action.
+    </div>
+
+    <h3>Output Format Per Recommendation</h3>
+    <ul>
+      <li><strong>Recommended Pathway:</strong> e.g., "Repair → then Donate"</li>
+      <li><strong>Reasoning:</strong> 2–3 sentences citing retrieved guideline</li>
+      <li><strong>Source Citation:</strong> Document name and chunk reference</li>
+      <li><strong>Next Steps:</strong> Specific, actionable suggestions (what to search, who to contact, what to check)</li>
+      <li><strong>Confidence Note:</strong> Flag if the recommendation is based on inferred rather than confirmed attributes</li>
+    </ul>
+  </div>
+
+  
+  <div class="section" id="s8">
+    <div class="section-header"><span class="section-num">08</span><h2>Agentic Workflow</h2></div>
+
+    <h3>When Does an Agent Add Value?</h3>
+    <p>A single-pass RAG query handles the core recommendation. An agent becomes valuable when the task requires <em>multiple sequential steps, tool use, or dynamic information lookup</em> that cannot be resolved in one LLM call.</p>
+
+    <h3>Proposed Agent Architecture</h3>
+    <p>A lightweight <strong>ReAct-style agent</strong> (Reason → Act → Observe → Repeat) with three tools:</p>
+
+    <table>
+      <thead><tr><th>Tool</th><th>Description</th><th>When Invoked</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>KnowledgeRetriever</strong></td>
+          <td>Queries the RAG vector store for sustainability guidelines</td>
+          <td>Always — primary grounding tool</td>
+        </tr>
+        <tr>
+          <td><strong>ItemClassifier</strong></td>
+          <td>Calls vision model to extract attributes from an uploaded image</td>
+          <td>When image is provided by user</td>
+        </tr>
+        <tr>
+          <td><strong>HazardChecker</strong></td>
+          <td>Looks up item type against a hazardous-material list (e-waste, chemicals, batteries)</td>
+          <td>When item category triggers potential hazard keywords</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Agent Reasoning Flow</h3>
+    <ol>
+      <li><strong>Receive input</strong> — text description and/or image from user.</li>
+      <li><strong>Classify item</strong> — invoke ItemClassifier if image present; otherwise parse text attributes.</li>
+      <li><strong>Hazard check</strong> — if item is electronics, batteries, refrigerant-bearing, or chemical — invoke HazardChecker first.</li>
+      <li><strong>Retrieve context</strong> — invoke KnowledgeRetriever with enriched item description.</li>
+      <li><strong>Reason over context</strong> — LLM selects pathway from the reuse hierarchy, citing retrieved chunks.</li>
+      <li><strong>Generate response</strong> — structured recommendation with source citations and next steps.</li>
+      <li><strong>Clarification loop (optional)</strong> — if confidence is low, agent asks one targeted clarifying question before finalizing.</li>
+    </ol>
+
+    <div class="callout amber">
+      <strong>MVP Scope Note</strong>
+      For the student prototype, implement a simplified agent with KnowledgeRetriever only (single tool). The ItemClassifier and HazardChecker can be stubbed as conditional logic branches or added in Phase 2. Full agent orchestration via LangChain or IBM watsonx Orchestrate is a natural enhancement.
+    </div>
+  </div>
+
+  
+  <div class="section" id="s9">
+    <div class="section-header"><span class="section-num">09</span><h2>SDG Alignment</h2></div>
+
+    <h3>Primary SDG</h3>
+    <div class="sdg-grid">
+      <div class="sdg-pill sdg-primary">SDG 12 — Responsible Consumption &amp; Production</div>
+    </div>
+    <p>The project directly addresses SDG 12.5 (substantially reduce waste generation through prevention, reduction, recycling and reuse) and SDG 12.8 (ensure people everywhere have relevant information and awareness for sustainable development and lifestyles).</p>
+
+    <h3>Secondary SDGs</h3>
+    <div class="sdg-grid">
+      <div class="sdg-pill sdg-secondary">SDG 11 — Sustainable Cities &amp; Communities</div>
+      <div class="sdg-pill sdg-secondary">SDG 13 — Climate Action</div>
+      <div class="sdg-pill sdg-secondary">SDG 9 — Industry, Innovation &amp; Infrastructure</div>
+      <div class="sdg-pill sdg-secondary">SDG 17 — Partnerships for the Goals</div>
+    </div>
+
+    <table>
+      <thead><tr><th>SDG</th><th>Connection to RePurpose AI</th></tr></thead>
+      <tbody>
+        <tr><td><strong>SDG 11</strong></td><td>Reduces municipal solid waste load; supports smart, sustainable urban waste practices; enables community-level donation and reuse networks</td></tr>
+        <tr><td><strong>SDG 13</strong></td><td>Extending product life reduces manufacturing demand, cutting embodied carbon; fewer items landfilled reduces methane emissions from decomposition</td></tr>
+        <tr><td><strong>SDG 9</strong></td><td>Promotes innovation in circular-economy tooling; encourages repair ecosystems and responsible industrial asset management</td></tr>
+        <tr><td><strong>SDG 17</strong></td><td>Knowledge base can integrate guidelines from NGOs, governments, and international bodies, modeling cross-sector data collaboration</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Tertiary Connections</h3>
+    <div class="sdg-grid">
+      <div class="sdg-pill sdg-tertiary">SDG 4 — Quality Education (AI literacy + sustainability awareness)</div>
+      <div class="sdg-pill sdg-tertiary">SDG 10 — Reduced Inequalities (accessible advice for all users)</div>
+    </div>
+  </div>
+
+  
+  <div class="section" id="s10">
+    <div class="section-header"><span class="section-num">10</span><h2>Prototype Scope — MVP vs Future Enhancements</h2></div>
+
+    <div class="tier-grid">
+      <div class="tier-box mvp">
+        <h3>✦ Minimum Viable Prototype</h3>
+        <ul>
+          <li>Text-based item description input via chat UI</li>
+          <li>RAG pipeline over a curated 30–50 document corpus (PDFs + web scraped guides)</li>
+          <li>ChromaDB or FAISS as local vector store</li>
+          <li>IBM watsonx.ai (or OpenAI API) as the LLM for generation</li>
+          <li>Pathway recommendation from the 7-level reuse hierarchy</li>
+          <li>Source citations included in every response</li>
+          <li>Simple Gradio or Streamlit web interface</li>
+          <li>Basic confidence flagging in output</li>
+          <li>Hardcoded hazard keywords for e-waste flag</li>
+          <li>Static knowledge base (manually curated, not live-updated)</li>
+        </ul>
+      </div>
+      <div class="tier-box future">
+        <h3>◈ Future Enhancements</h3>
+        <ul>
+          <li>Image upload with multimodal vision model (GPT-4o / LLaVA)</li>
+          <li>Full ReAct agent with multiple tools</li>
+          <li>Location-aware recommendations (local recycler/charity lookup)</li>
+          <li>Live knowledge base with scheduled re-ingestion</li>
+          <li>Barcode/QR scan for product identification</li>
+          <li>Carbon footprint estimate per pathway</li>
+          <li>User history and impact dashboard (items diverted from landfill)</li>
+          <li>Multilingual support</li>
+          <li>Integration with donation platform APIs (Freecycle, Too Good To Go)</li>
+          <li>Mobile app (React Native / Flutter)</li>
+          <li>Fine-tuned smaller model for offline use in low-connectivity contexts</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Suggested 4-Week Internship Build Plan</h3>
+    <table>
+      <thead><tr><th>Week</th><th>Focus</th><th>Deliverable</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Week 1</strong></td><td>Research, document curation, problem framing</td><td>Knowledge base corpus (30+ docs), chunked and embedded; problem statement finalized</td></tr>
+        <tr><td><strong>Week 2</strong></td><td>RAG pipeline build</td><td>Working retriever + LLM generation pipeline; tested on 10+ sample items</td></tr>
+        <tr><td><strong>Week 3</strong></td><td>UI, prompt refinement, output formatting</td><td>Streamlit/Gradio interface; structured output with citations; edge case handling</td></tr>
+        <tr><td><strong>Week 4</strong></td><td>Evaluation, responsible AI review, documentation</td><td>Demo-ready prototype; evaluation results; project report and presentation</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  
+  <div class="section" id="s11">
+    <div class="section-header"><span class="section-num">11</span><h2>Responsible AI Considerations</h2></div>
+
+    <h3>Transparency &amp; Explainability</h3>
+    <ul>
+      <li>Every recommendation must include a <strong>source citation</strong> — the document name and the specific claim retrieved.</li>
+      <li>The reasoning chain (why this pathway was chosen over alternatives) must be shown to the user, not hidden inside the LLM response.</li>
+      <li>The system must clearly state when it is inferring attributes (e.g., "Based on your description, I am assuming this item is primarily plastic — please correct me if not").</li>
+    </ul>
+
+    <h3>Avoiding Unsupported Recommendations</h3>
+    <ul>
+      <li>The system prompt must prohibit the LLM from recommending disposal methods, chemical handling, or legal compliance pathways unless retrieved context supports them.</li>
+      <li>If no relevant context is retrieved (low similarity scores), the system should respond: "I don't have reliable guidance for this specific item — please consult your local waste authority."</li>
+      <li>Confidence thresholds should be applied: if top-k retrieval similarity falls below a threshold, flag the recommendation as low-confidence.</li>
+    </ul>
+
+    <h3>Safety</h3>
+    <ul>
+      <li>Hazardous items (e-waste, batteries, chemicals, asbestos-containing materials) must always trigger a <strong>hard safety warning</strong> before any other recommendation.</li>
+      <li>The system must never recommend home disposal of hazardous materials — always defer to certified disposal channels.</li>
+      <li>No personally identifiable information should be collected or stored; item descriptions are ephemeral per session.</li>
+    </ul>
+
+    <h3>Fairness &amp; Accessibility</h3>
+    <ul>
+      <li>The knowledge base should include guidelines from multiple geographies and not assume a single regulatory context (e.g., do not default to EU rules for all users).</li>
+      <li>When geographic context is unknown, the system should note that specific local rules may vary and prompt the user to verify locally.</li>
+      <li>Interface should be accessible to non-expert users — avoid technical jargon in outputs.</li>
+    </ul>
+
+    <h3>Privacy</h3>
+    <ul>
+      <li>Images uploaded by users should not be stored beyond the active session and should not be sent to third-party services without disclosure.</li>
+      <li>For the MVP, use local vision models (LLaVA) or clearly disclose API usage if using cloud vision services.</li>
+    </ul>
+
+    <h3>Avoiding Over-Reliance</h3>
+    <ul>
+      <li>The system must include a <strong>disclaimer</strong> on all outputs: "This recommendation is advisory only. For hazardous materials, legal compliance obligations, or high-value decisions, consult a qualified professional or your local authority."</li>
+      <li>The system is a <em>decision support tool</em>, not a regulatory compliance engine.</li>
+    </ul>
+  </div>
+
+  
+  <div class="section" id="s12">
+    <div class="section-header"><span class="section-num">12</span><h2>System Architecture &amp; Technology Stack</h2></div>
+
+    <h3>High-Level Architecture</h3>
+    <p>The system follows a layered architecture with clear separation between the user interface, orchestration logic, AI services, and the knowledge base.</p>
+
+    <table>
+      <thead><tr><th>Layer</th><th>Component</th><th>Role</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Presentation</strong></td><td>Streamlit / Gradio UI</td><td>Chat interface for text input and optional image upload; displays structured recommendation output</td></tr>
+        <tr><td><strong>Orchestration</strong></td><td>LangChain / LlamaIndex</td><td>Manages RAG pipeline: query processing, retrieval, prompt assembly, LLM call, output parsing</td></tr>
+        <tr><td><strong>Vision (Optional)</strong></td><td>Multimodal LLM (GPT-4o / LLaVA)</td><td>Processes uploaded image, returns structured item attributes</td></tr>
+        <tr><td><strong>LLM Generation</strong></td><td>IBM watsonx.ai / OpenAI API</td><td>Generates grounded recommendation from prompt + retrieved context</td></tr>
+        <tr><td><strong>Retrieval</strong></td><td>ChromaDB / FAISS</td><td>Stores and retrieves embedded document chunks via semantic similarity search</td></tr>
+        <tr><td><strong>Embedding</strong></td><td>sentence-transformers / watsonx Embeddings</td><td>Converts text to vector representations for semantic retrieval</td></tr>
+        <tr><td><strong>Knowledge Base</strong></td><td>Curated PDF/HTML corpus</td><td>Sustainability, circular-economy, waste-management, and disposal guidelines</td></tr>
+        <tr><td><strong>Data Ingestion</strong></td><td>Python scripts (PyPDF2, BeautifulSoup)</td><td>Parse, chunk, and embed source documents into the vector store</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Architecture Diagram (Textual)</h3>
+    <div class="callout" style="font-family:monospace;font-size:12.5px;white-space:pre;background:#f7f8fa;border-color:#e5e7eb;overflow-x:auto">
+User Input (text + optional image)
+           │
+           ▼
+  ┌─────────────────┐
+  │  Streamlit UI   │
+  └────────┬────────┘
+           │
+           ▼
+  ┌─────────────────────────────────────────┐
+  │         Orchestration Layer              │
+  │   (LangChain / LlamaIndex)               │
+  │                                          │
+  │  ┌──────────────┐  ┌────────────────┐   │
+  │  │ ItemClassifier│  │  HazardChecker │   │
+  │  │ (Vision Model)│  │ (Keyword List) │   │
+  │  └──────┬───────┘  └───────┬────────┘   │
+  │         └──────────┬───────┘            │
+  │                    ▼                    │
+  │         ┌─────────────────┐             │
+  │         │ KnowledgeRetriever│            │
+  │         │  (Vector Store)  │            │
+  │         └────────┬────────┘             │
+  │                  │ top-k chunks          │
+  │                  ▼                      │
+  │         ┌─────────────────┐             │
+  │         │   Prompt Builder │            │
+  │         │ (System + RAG + │            │
+  │         │  User Input)    │            │
+  │         └────────┬────────┘             │
+  └──────────────────┼──────────────────────┘
+                     ▼
+           ┌─────────────────┐
+           │  LLM (watsonx / │
+           │  OpenAI / etc.) │
+           └────────┬────────┘
+                    ▼
+         Structured Recommendation
+       (Pathway + Reasoning + Citations
+              + Next Steps)
+    </div>
+
+    <h3>Technology Stack Summary</h3>
+
+    <h4>Core (MVP)</h4>
+    <div class="stack-row">
+      <span class="stack-tag">Python 3.10+</span>
+      <span class="stack-tag">LangChain</span>
+      <span class="stack-tag">ChromaDB</span>
+      <span class="stack-tag">sentence-transformers</span>
+      <span class="stack-tag">IBM watsonx.ai</span>
+      <span class="stack-tag">Streamlit</span>
+      <span class="stack-tag">PyPDF2</span>
+      <span class="stack-tag">python-dotenv</span>
+    </div>
+
+    <h4>Vision (Phase 2)</h4>
+    <div class="stack-row">
+      <span class="stack-tag">OpenAI GPT-4o Vision</span>
+      <span class="stack-tag">LLaVA (local)</span>
+      <span class="stack-tag">Pillow (image pre-processing)</span>
+    </div>
+
+    <h4>Optional / Alternatives</h4>
+    <div class="stack-row">
+      <span class="stack-tag">LlamaIndex (alt. to LangChain)</span>
+      <span class="stack-tag">FAISS (alt. to ChromaDB)</span>
+      <span class="stack-tag">Gradio (alt. to Streamlit)</span>
+      <span class="stack-tag">Pinecone Free (cloud vector DB)</span>
+      <span class="stack-tag">Ollama (local LLM hosting)</span>
+    </div>
+
+    <h3>Deployment (Student-Feasible)</h3>
+    <ul>
+      <li><strong>Local:</strong> Run entirely on laptop; ChromaDB persists to disk; Streamlit serves locally.</li>
+      <li><strong>Demo hosting:</strong> Streamlit Community Cloud (free); Hugging Face Spaces (free).</li>
+      <li><strong>API keys:</strong> IBM watsonx student access via SkillsBuild; OpenAI free-tier API for fallback.</li>
+    </ul>
+  </div>
+
+  
+  <div class="section" id="s13">
+    <div class="section-header"><span class="section-num">13</span><h2>Measurable Impact Metrics</h2></div>
+
+    <h3>Technical Evaluation Metrics (Prototype)</h3>
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-label">Retrieval Precision</div>
+        <div class="metric-value">% of retrieved chunks judged relevant to the item query — target ≥ 70%</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Pathway Accuracy</div>
+        <div class="metric-value">% of recommendations matching expert-judged correct pathway on a test set of 20–30 items</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Citation Rate</div>
+        <div class="metric-value">% of responses that include at least one source citation — target: 100%</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Hallucination Rate</div>
+        <div class="metric-value">% of recommendations containing claims not traceable to retrieved context — target: &lt;5%</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Response Completeness</div>
+        <div class="metric-value">% of responses containing all required fields (pathway + reasoning + next steps)</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Safety Check Pass Rate</div>
+        <div class="metric-value">% of hazardous-item queries that correctly trigger a safety warning before recommendation</div>
+      </div>
+    </div>
+
+    <h3>Sustainability Impact Metrics (If Deployed)</h3>
+    <table>
+      <thead><tr><th>Metric</th><th>How Measured</th><th>Why It Matters</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Items Diverted from Landfill</strong></td><td>Count of sessions where recommended pathway ≠ disposal</td><td>Direct circular-economy impact proxy</td></tr>
+        <tr><td><strong>Pathway Distribution</strong></td><td>% of recommendations per pathway (reuse / repair / donate / recycle / dispose)</td><td>Shows whether system is actually promoting higher-value pathways</td></tr>
+        <tr><td><strong>Carbon Avoidance Estimate</strong></td><td>Estimated CO₂e saved using lifecycle data per item category</td><td>Quantifies climate contribution (SDG 13 evidence)</td></tr>
+        <tr><td><strong>User Confidence Score</strong></td><td>Post-recommendation survey: "Did this help you make a better decision?" (1–5)</td><td>Measures real-world decision support effectiveness</td></tr>
+        <tr><td><strong>Knowledge Coverage</strong></td><td>% of item categories in the test set successfully handled without low-confidence fallback</td><td>Indicates knowledge base completeness</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Academic Evaluation Approach</h3>
+    <p>For the internship demonstration, construct a <strong>test set of 25–30 item scenarios</strong> spanning diverse categories (electronics, furniture, packaging, textiles, chemicals). For each, manually define the expert-correct pathway and evaluate the system's output against it. This produces quantitative accuracy evidence suitable for a project report and presentation.</p>
+  </div>
+
+  
+  <div class="section" id="s14">
+    <div class="section-header"><span class="section-num">14</span><h2>Conclusion</h2></div>
+    <p>RePurpose AI addresses a genuine, measurable problem — the information gap that sends reusable, repairable, and recyclable items to landfill — using AI in a way that is both technically justified and practically feasible for a student internship.</p>
+    <p>The design is intentionally lean at MVP stage: a RAG pipeline, a curated knowledge base, a clear recommendation logic rooted in the circular-economy hierarchy, and a simple web interface. Every component is open-source or freely accessible for students. The architecture scales naturally into a production system with agent tooling, multimodal vision, and live knowledge updates.</p>
+    <p>Critically, the use of RAG ensures that the system's advice is <strong>traceable, explainable, and grounded in real sustainability guidelines</strong> — not generated from an LLM's opaque internal knowledge. This makes it trustworthy, auditable, and aligned with responsible AI principles.</p>
+
+    <div class="callout green">
+      <strong>Core Value Proposition</strong>
+      RePurpose AI does not try to solve all of waste management. It solves one specific, high-frequency moment: the moment when someone holds an unwanted item and does not know what the right thing to do with it is. Making that moment better — more informed, more circular, more confident — is a meaningful and achievable contribution to SDG 12.
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>RePurpose AI — Project Ideation &amp; Solution Architecture Document  ·  1M1B IBM SkillsBuild AI for Sustainability Virtual Internship</p>
+    <p style="margin-top:6px">Made with IBM Bob</p>
+  </div>
+
+</div>
+</body>
+</html>
